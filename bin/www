@@ -7,19 +7,26 @@
 var app = require('../app');
 var debug = require('debug')('oauthexpress:server');
 var http = require('http');
+var https = require('https');
+const fs = require('fs');
+const path = require('path');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '3009');
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = https.createServer({
+      key: fs.readFileSync(path.resolve(__dirname, 'key.pem')),
+      cert: fs.readFileSync(path.resolve(__dirname, 'cert.pem')),
+      passphrase: 'mat1Bec#'
+    }, app);
 
 /**
  * Listen on provided port, on all network interfaces.

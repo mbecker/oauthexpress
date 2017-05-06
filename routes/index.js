@@ -14,6 +14,15 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.all('/api', function(req, res, next) {
+  console.log('--- api ---');
+  console.log(req.headers);
+  console.log(req.body);
+  res.json({
+  	message: 'API'
+  });
+});
+
 router.post('/token', function(req, res, next) {
   winstonLogger.info("--- req.headers --- " + moment().format('Do MMMM YYYY, h:mm:ss a'));
   winstonLogger.info(req.headers);
